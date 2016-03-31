@@ -1,33 +1,30 @@
 'use strict'
 import Vue from 'vue'
-import {axis} from 'src/index'
 import _ from 'lodash'
 
-const topAxis = axis.topAxis
-
-function prepare (source) {
+function prepare (axis, source) {
   return new Vue({
     template: `<div>
-    <top-axis
+    <axis
       :color = "color"
       :x = "x"
       :y = "y"
       :ticks = "ticks"
       :text-decorator = "textDecorator"
-      :axis-length="axisLength"></top-axis>
+      :axis-length="axisLength"></axis>
     <div>`,
     data: function () {
       return {...source}
     },
-    components: {topAxis}
+    components: {'axis': axis}
   }).$mount()
 }
 
-function exec (source, expected) {
+function exec (axis, source, expected) {
   describe('', () => {
     let vm
     beforeEach(function () {
-      vm = prepare(source)
+      vm = prepare(axis, source)
     })
 
     it('location', function () {

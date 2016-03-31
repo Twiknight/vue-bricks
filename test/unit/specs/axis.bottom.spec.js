@@ -2,9 +2,9 @@
 import {exec} from '../shared/axis.shared.js'
 import {axis} from 'src/index'
 
-const topAxis = axis.topAxis
+const bottomAxis = axis.bottomAxis
 
-describe('top axis default values', function () {
+describe('bottom axis default values', function () {
   const source = {axisLength: 100}
   const expected = {
     location: 'translate(0,0)',
@@ -14,19 +14,19 @@ describe('top axis default values', function () {
     tickCount: 2,
     tickLocations: ['translate(0,0)', 'translate(100,0)'],
     tickX: '0',
-    tickY: '-0.5em',
+    tickY: '0.5em',
     textAnchor: 'middle',
     textX: '0',
     textXOffset: '0',
-    textY: '-0.5em',
-    textYOffset: '-0.5em',
+    textY: '0.5em',
+    textYOffset: '0.5em',
     texts: ['0', '100']
   }
 
-  exec(topAxis, source, expected)
+  exec(bottomAxis, source, expected)
 })
 
-describe('top axis custom values', function () {
+describe('bottom axis custom values', function () {
   const source = {
     color: 'red',
     axisLength: 200,
@@ -50,14 +50,14 @@ describe('top axis custom values', function () {
       'translate(200,0)'
     ],
     tickX: '0',
-    tickY: '-0.5em',
+    tickY: '0.5em',
     textAnchor: 'middle',
     textX: '0',
     textXOffset: '0',
-    textY: '-0.5em',
-    textYOffset: '-0.5em',
+    textY: '0.5em',
+    textYOffset: '0.5em',
     texts: ['-10cm', '20cm', '50cm', '90cm']
   }
 
-  exec(topAxis, source, expected)
+  exec(bottomAxis, source, expected)
 })

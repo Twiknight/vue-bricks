@@ -76,6 +76,14 @@ const baseOptions = {
 
 const horizontalMixin = {
   computed: {
+    localTicks () {
+      return preprocessTicks(this.ticks, this.axisLength).map((v) => {
+        return {
+          location: `translate(${v.translatedTick},0)`,
+          value: this.textDecorator(v.originalTick)
+        }
+      })
+    },
     x2 () {
       return this.axisLength
     },
@@ -110,14 +118,6 @@ const verticalMixin = {
 
 const topMixin = {
   computed: {
-    localTicks () {
-      return preprocessTicks(this.ticks, this.axisLength).map((v) => {
-        return {
-          location: `translate(${v.translatedTick},0)`,
-          value: this.textDecorator(v.originalTick)
-        }
-      })
-    },
     tickY () {
       return '-' + this.tickLength
     },
@@ -131,7 +131,17 @@ const topMixin = {
 }
 
 const bottomMixin = {
-  computed: {}
+  computed: {
+    tickY () {
+      return this.tickLength
+    },
+    textY () {
+      return this.tickLength
+    },
+    textYOffset () {
+      return this.textOffset
+    }
+  }
 }
 
 const leftMixin = {
@@ -146,21 +156,21 @@ const topAxis = Vue.extend({
   mixins: [baseOptions, horizontalMixin, topMixin]
 })
 
-const BottomAxis = Vue.extend({
+const bottomAxis = Vue.extend({
   mixins: [baseOptions, horizontalMixin, bottomMixin]
 })
 
-const LeftAxis = Vue.extend({
+const leftAxis = Vue.extend({
   mixins: [baseOptions, verticalMixin, leftMixin]
 })
 
-const RightAxis = Vue.extend({
+const rightAxis = Vue.extend({
   mixins: [baseOptions, verticalMixin, rightMixin]
 })
 
 export default {
   topAxis,
-  BottomAxis,
-  LeftAxis,
-  RightAxis
+  bottomAxis,
+  leftAxis,
+  rightAxis
 }
