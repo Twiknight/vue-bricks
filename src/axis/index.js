@@ -25,7 +25,7 @@ const baseOptions = {
     axisLength: {
       type: Number,
       default: 0,
-      validator: (v) => v > 0
+      validator: (v) => typeof v === 'number' && v > 0
     },
     x: {
       default: 0
@@ -76,40 +76,6 @@ const baseOptions = {
 
 const horizontalMixin = {
   computed: {
-    x2 () {
-      return this.axisLength
-    },
-    y2 () {
-      return 0
-    },
-    tickX () {
-      return 0
-    },
-    textAnchor () {
-      return 'middle'
-    },
-    textX () {
-      return 0
-    },
-    textXOffset () {
-      return 0
-    }
-  }
-}
-
-const verticalMixin = {
-  computed: {
-    x2 () {
-      return 0
-    },
-    y2 () {
-      return this.length
-    }
-  }
-}
-
-const topMixin = {
-  computed: {
     localTicks () {
       return preprocessTicks(this.ticks, this.axisLength).map((v) => {
         return {
@@ -118,6 +84,57 @@ const topMixin = {
         }
       })
     },
+    x2 () {
+      return this.axisLength
+    },
+    y2 () {
+      return '0'
+    },
+    tickX () {
+      return '0'
+    },
+    textAnchor () {
+      return 'middle'
+    },
+    textX () {
+      return '0'
+    },
+    textXOffset () {
+      return '0'
+    }
+  }
+}
+
+const verticalMixin = {
+  computed: {
+    localTicks () {
+      return preprocessTicks(this.ticks, this.axisLength).map((v) => {
+        return {
+          location: `translate(0,${this.axisLength - v.translatedTick})`,
+          value: this.textDecorator(v.originalTick)
+        }
+      })
+    },
+    x2 () {
+      return '0'
+    },
+    y2 () {
+      return this.axisLength
+    },
+    tickY () {
+      return '0'
+    },
+    textY () {
+      return '0'
+    },
+    textYOffset () {
+      return '0.35em'
+    }
+  }
+}
+
+const topMixin = {
+  computed: {
     tickY () {
       return '-' + this.tickLength
     },
@@ -131,36 +148,72 @@ const topMixin = {
 }
 
 const bottomMixin = {
-  computed: {}
+  computed: {
+    tickY () {
+      return this.tickLength
+    },
+    textY () {
+      return this.tickLength
+    },
+    textYOffset () {
+      return this.textOffset
+    }
+  }
 }
 
 const leftMixin = {
-  computed: {}
+  computed: {
+    tickX () {
+      return '-' + this.tickLength
+    },
+    textX () {
+      return '-' + this.tickLength
+    },
+    textXOffset () {
+      return '-' + this.textOffset
+    },
+    textAnchor () {
+      return 'end'
+    }
+  }
 }
 
 const rightMixin = {
-  computed: []
+  computed: {
+    tickX () {
+      return this.tickLength
+    },
+    textX () {
+      return this.tickLength
+    },
+    textXOffset () {
+      return this.textOffset
+    },
+    textAnchor () {
+      return 'start'
+    }
+  }
 }
 
 const topAxis = Vue.extend({
   mixins: [baseOptions, horizontalMixin, topMixin]
 })
 
-const BottomAxis = Vue.extend({
+const bottomAxis = Vue.extend({
   mixins: [baseOptions, horizontalMixin, bottomMixin]
 })
 
-const LeftAxis = Vue.extend({
+const leftAxis = Vue.extend({
   mixins: [baseOptions, verticalMixin, leftMixin]
 })
 
-const RightAxis = Vue.extend({
+const rightAxis = Vue.extend({
   mixins: [baseOptions, verticalMixin, rightMixin]
 })
 
 export default {
   topAxis,
-  BottomAxis,
-  LeftAxis,
-  RightAxis
+  bottomAxis,
+  leftAxis,
+  rightAxis
 }
