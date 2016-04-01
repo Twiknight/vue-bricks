@@ -179,7 +179,20 @@ const leftMixin = {
 }
 
 const rightMixin = {
-  computed: {}
+  computed: {
+    tickX () {
+      return this.tickLength
+    },
+    textX () {
+      return this.tickLength
+    },
+    textXOffset () {
+      return this.textOffset
+    },
+    textAnchor () {
+      return 'start'
+    }
+  }
 }
 
 const topAxis = Vue.extend({
