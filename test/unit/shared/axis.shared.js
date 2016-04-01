@@ -52,34 +52,38 @@ function exec (axis, source, expected) {
       const tickLines = Array.from(vm.$el.querySelectorAll('.tick line'))
       expect(tickLines.length).toBe(expected.tickCount)
 
-      const colors = _.map(tickLines, (el) => el.getAttribute('stroke'))
-      expect(_.every(colors, (x) => x === expected.color)).toBeTruthy()
+      _.forEach(tickLines, function (el) {
+        const color = el.getAttribute('stroke')
+        expect(color).toEqual(expected.color)
 
-      const xs = _.map(tickLines, (el) => el.getAttribute('x2'))
-      expect(_.every(xs, (x) => x === expected.tickX)).toBeTruthy()
+        const x2 = el.getAttribute('x2')
+        expect(x2).toEqual(expected.tickX)
 
-      const ys = _.map(tickLines, (el) => el.getAttribute('y2'))
-      expect(_.every(ys, (y) => y === expected.tickY)).toBeTruthy()
+        const y2 = el.getAttribute('y2')
+        expect(y2).toEqual(expected.tickY)
+      })
     })
 
     it('tick texts', function () {
       const tickTexts = Array.from(vm.$el.querySelectorAll('.tick text'))
       expect(tickTexts.length).toBe(expected.tickCount)
 
-      const anchors = _.map(tickTexts, (el) => el.getAttribute('text-anchor'))
-      expect(_.every(anchors, (x) => x === expected.textAnchor)).toBeTruthy()
+      _.forEach(tickTexts, function (el) {
+        const anchor = el.getAttribute('text-anchor')
+        expect(anchor).toEqual(expected.textAnchor)
 
-      const xs = _.map(tickTexts, (el) => el.getAttribute('x'))
-      expect(_.every(xs, (x) => x === expected.textX)).toBeTruthy()
+        const x = el.getAttribute('x')
+        expect(x).toEqual(expected.textX)
 
-      const dxs = _.map(tickTexts, (el) => el.getAttribute('dx'))
-      expect(_.every(dxs, (dx) => dx === expected.textXOffset)).toBeTruthy()
+        const dx = el.getAttribute('dx')
+        expect(dx).toEqual(expected.textXOffset)
 
-      const ys = _.map(tickTexts, (el) => el.getAttribute('y'))
-      expect(_.every(ys, (y) => y === expected.textY)).toBeTruthy()
+        const y = el.getAttribute('y')
+        expect(y).toEqual(expected.textY)
 
-      const dys = _.map(tickTexts, (el) => el.getAttribute('dy'))
-      expect(_.every(dys, (dy) => dy === expected.textYOffset)).toBeTruthy()
+        const dy = el.getAttribute('dy')
+        expect(dy).toEqual(expected.textYOffset)
+      })
 
       const texts = _.map(tickTexts, (el) => el.textContent)
       expect(_.xor(texts, expected.texts)).toEqual([])
