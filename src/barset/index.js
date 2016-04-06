@@ -112,10 +112,35 @@ const horizontalMixin = {
   }
 }
 
+const verticalMixin = {
+  computed: {
+    bars () {
+      const barSet = preprocessBars(this.series, this.length, this.max_value, this.min_value)
+      const width = this.bar_width
+      const gap = this.gap
+      const colorer = this.colorer
+      return barSet.map(function (x, idx) {
+        return {
+          location: `translate(${idx * width + gap},${0})`,
+          width: width,
+          height: x.translated,
+          color: colorer(x.origin),
+          data: x.origin
+        }
+      })
+    }
+  }
+}
+
 const horizontal_bars = Vue.extend({
   mixins: [baseOptions, horizontalMixin]
 })
 
+const vertical_bars = Vue.extend({
+  mixins: [baseOptions, verticalMixin]
+})
+
 export default {
-  horizontal_bars
+  horizontal_bars,
+  vertical_bars
 }

@@ -1,9 +1,9 @@
-import {exec} from '../shared/barset.shared.js'
 import {barset} from 'src/index'
+import {exec} from '../shared/barset.shared.js'
 
-const bars = barset.horizontal_bars
+const bars = barset.vertical_bars
 
-describe('horizontal barset default values', function () {
+describe('vertical bar set default value', function () {
   const source = {
     max_value: 100,
     bar_width: 10,
@@ -20,7 +20,7 @@ describe('horizontal barset default values', function () {
   exec(bars, source, expected)
 })
 
-describe('horizontal bars custom value', function () {
+describe('horizontal bar set custom values', function () {
   const source = {
     series: [-50, 0, 50],
     x: 10,
@@ -44,21 +44,21 @@ describe('horizontal bars custom value', function () {
   const expected = {
     location: 'translate(10,10)',
     barCount: 3,
-    barLocations: ['translate(0,5)', 'translate(0,25)', 'translate(0,45)'],
+    barLocations: ['translate(5,0)', 'translate(25,0)', 'translate(45,0)'],
     rects: [
       {
-        width: '50',
-        height: '20',
+        width: '20',
+        height: '50',
         fill: 'red'
       },
       {
-        width: '100',
-        height: '20',
+        width: '20',
+        height: '100',
         fill: 'red'
       },
       {
-        width: '150',
-        height: '20',
+        width: '20',
+        height: '150',
         fill: 'green'
       }
     ]

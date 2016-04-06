@@ -67,8 +67,6 @@ function exec (barset, source, expected) {
       const rects = Array.from(vm.$el.querySelectorAll('.bar rect'))
 
       if (rects.length > 0) {
-        spyOn(source, 'mouseover')
-        spyOn(source, 'mouseout')
         const ev_in = new Event('mouseover')
         const ev_out = new Event('mouseout')
 
